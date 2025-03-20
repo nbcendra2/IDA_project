@@ -36,7 +36,6 @@ EM_run <- function(x, y, start = c(0, 0), eps = 0.00001) {
   Yobs <- y[iobs]
   
   diff <- Inf
-  iter <- 0
   
   while (diff > eps) {
     

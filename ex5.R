@@ -27,7 +27,7 @@ q_func <- function(par, X, Yobs, Yhat, idx_obs, idx_miss){
 }
 
 # EM algorithm function
-EM_run <- function(x, y, start = c(0, 0), eps = 0.00001) {
+EM_run <- function(x, y, start = c(0, 0), eps = 1e-6 ) {
   iobs  <- which(!is.na(y))
   imiss <- which(is.na(y))
   
@@ -40,7 +40,7 @@ EM_run <- function(x, y, start = c(0, 0), eps = 0.00001) {
   while (diff > eps) {
     
     linpred <- beta_curr[1] + beta_curr[2]*x
-    p       <- 1 / (1 + exp(-linpred))
+    p       <- exp(linpred)/ (1 + exp(linpred))
     Yhat    <- p[imiss]
     
     # ---- E Step ----
@@ -61,7 +61,7 @@ EM_run <- function(x, y, start = c(0, 0), eps = 0.00001) {
     beta_curr <- beta_new
   }
   
-  list(beta = beta_curr, value = res$value, iter = iter)
+  list(beta = beta_curr, value = res$value)
 }
 
 
